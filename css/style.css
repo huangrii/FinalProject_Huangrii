@@ -1,35 +1,100 @@
-html{
-    scroll-behavior: smooth;
+/* =====================================================================
+   CÁC CÀI ĐẶT CƠ BẢN CHO TOÀN BỘ TRANG (MẶC ĐỊNH)
+===================================================================== */
+html {
+    scroll-behavior: smooth; /* Mặc định cuộn mượt */
 }
+
 body {
     background-color: #dedede;
     padding: 5px;
     margin: 15px;
+    font-family: Arial, sans-serif;
     font-size: 25px;
-    font-family:Arial, sans-serif;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
-    font-family:Arial, sans-serif;
-    font-size: 1.95em;
 }
 
-h2{
-    text-align:center;
-  }
-
-li{
-    margin-top: 20px;
+/* =====================================================================
+   1. GIAO DIỆN MOBILE-FIRST (YÊU CẦU 4)
+   Đoạn code này nằm ngoài cùng, không bọc trong @media nào cả
+===================================================================== */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Yêu cầu 4a: Lưới 1 cột */
+    gap: 10px; /* Yêu cầu 4a: Khoảng cách 10px */
 }
 
-img{
-    border: 5px solid blue;
-    border-radius: 35px;
+figure {
+    margin: 0; /* Reset lề mặc định để lưới đẹp hơn */
+    padding: 10px;
+    text-align: center;
+    border: 2px solid transparent; /* Tạo sẵn viền tàng hình để Dark mode dùng */
+}
+
+img {
     width: 100%;
-  }
+    height: auto;
+    /* LƯU Ý: Đừng để border-radius ở đây nữa nhé, 
+       chúng ta sẽ dùng nó ở phần Tablet bên dưới */
+}
 
-.label{
-    text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+/* =====================================================================
+   2. GIAO DIỆN TABLET (YÊU CẦU 5)
+===================================================================== */
+@media screen and (min-width: 772px) {
+    .grid {
+        grid-template-columns: 1fr 1fr; /* Yêu cầu 5a: Chuyển thành lưới 2 cột */
+    }
+
+    figure {
+        border-radius: 50%; /* Yêu cầu 5b: Bo góc thành hình tròn */
+        overflow: hidden; /* Bắt buộc phải có để ảnh bên trong không bị lòi ra ngoài hình tròn */
+    }
+
+    figure:last-child {
+        grid-column: 1 / -1; /* Yêu cầu 5c: Hình cuối cùng (Rebecca) chiếm trọn 2 cột */
+    }
+}
+
+/* =====================================================================
+   3. GIAO DIỆN LARGE SCREEN / DESKTOP (YÊU CẦU 6)
+===================================================================== */
+@media screen and (min-width: 992px) {
+    /* Màn hình lớn sẽ tự động kế thừa lưới 2 cột từ Tablet ở trên */
+    
+    figure:nth-child(3n) {
+        grid-column: 1 / -1; /* Yêu cầu 6a: Cứ mỗi hình thứ 3 (Ada, Grace, Rebecca) sẽ chiếm 2 cột */
+    }
+
+    figure {
+        border-radius: 0; /* Yêu cầu 6b: Xóa bo góc hình tròn (Tuyệt đối không dùng max-width ở đây) */
+    }
+}
+
+/* =====================================================================
+   4. SỞ THÍCH NGƯỜI DÙNG: TẮT CHUYỂN ĐỘNG (YÊU CẦU 7)
+===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto; /* Yêu cầu 7a: Tắt tính năng cuộn mượt (smooth) đi */
+    }
+}
+
+/* =====================================================================
+   5. SỞ THÍCH NGƯỜI DÙNG: CHẾ ĐỘ TỐI - DARK MODE (YÊU CẦU 8)
+===================================================================== */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222222; /* Phủ đen cả nền trang web cho hợp tông */
+        color: #ffffff;
+    }
+
+    figure {
+        background-color: #3b3b3b; /* Yêu cầu 8a: Màu nền figure tối */
+        color: #f1c40f;          /* Yêu cầu 8b: Chữ caption đổi sang màu vàng sáng */
+        border: 2px solid #000000; /* Yêu cầu 8c: Đổi viền figure thành đen */
+    }
 }
